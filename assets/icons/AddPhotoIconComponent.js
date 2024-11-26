@@ -6,7 +6,7 @@ const AddPhotoComponent = (props) => (
     <Path
       fill="#FF6C00"
       fillRule="evenodd"
-      d="M120 87h-1v6h-6v1h6v6h1v-6h6v-1h-6v-6Z"
+      d="M20.5 13.5H19.5V19.5H13.5V20.5H19.5V26.5H20.5V20.5H26.5V19.5H20.5V13.5Z"
       clipRule="evenodd"
     />
   </Svg>

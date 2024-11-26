@@ -12,24 +12,31 @@ import {
   Platform,
   Alert,
 } from "react-native";
-import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import { useNavigation } from '@react-navigation/native';
 
 const image = require("../assets/photo_bg.png");
 
 const LoginScreen = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [inputs, setInputs] = useState({
+    email: "", password: "",
+    });
+  
+  const handleInputChange = (name, value) => {
+    setInputs((prev) => ({ ...prev, [name]: value }));
+    };
+  const navigation = useNavigation();
+
   const [isEmailFocused, setIsEmailFocused] = useState(false);
   const [isPassFocused, setIsPassFocused] = useState(false);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   const onLogin = () => {
-    if (!email || !password) {
+    if (!inputs.email || !inputs.password) {
       Alert.alert("Помилка", "Будь ласка, заповніть усі необхідні поля");
       return;
     }
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-    if (!emailRegex.test(email)) {
+    if (!emailRegex.test(inputs.email)) {
       Alert.alert(
         "Помилка",
         "Будь ласка, введіть коректну адресу електронної пошти"
@@ -37,12 +44,13 @@ const LoginScreen = () => {
       return;
     }
 
-    if (password.length < 6) {
+    if (inputs.password.length < 6) {
       Alert.alert("Помилка", "Пароль повинен бути не менше 6 символів");
       return;
     }
 
-    Alert.alert("Логін інфо", `${email} + ${password}`);
+    Alert.alert("Логін інфо", `${inputs.email} + ${inputs.password}`);
+    navigation.navigate("Home");
   };
 
   const togglePasswordVisibility = () => {
@@ -50,8 +58,6 @@ const LoginScreen = () => {
   };
 
   return (
-        <SafeAreaProvider>
-      <SafeAreaView style={styles.container}>
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
         <ImageBackground source={image} resizeMode="cover" style={styles.image}>
@@ -64,11 +70,12 @@ const LoginScreen = () => {
               <View style={styles.inputGroup}>
                 <TextInput
                   style={[styles.input, isEmailFocused && styles.inputFocused]}
-                  value={email}
-                  onChangeText={setEmail}
+                  value={inputs.email}
+                  onChangeText={(value) => handleInputChange("email", value)}
                   placeholder="Адреса електронної пошти"
                   placeholderTextColor="#BDBDBD"
                   keyboardType="email-address"
+                  autoCapitalize="none"
                   onFocus={() => setIsEmailFocused(true)}
                   onBlur={() => setIsEmailFocused(false)}
                 />
@@ -79,10 +86,11 @@ const LoginScreen = () => {
                   ]}>
                   <TextInput
                     style={styles.password}
-                    value={password}
-                    onChangeText={setPassword}
+                    value={inputs.password}
+                    onChangeText={(value) => handleInputChange("password", value)}
                     placeholder="Пароль"
                     placeholderTextColor="#BDBDBD"
+                    autoCapitalize="none"
                     secureTextEntry={!isPasswordVisible}
                     onFocus={() => setIsPassFocused(true)}
                     onBlur={() => setIsPassFocused(false)}
@@ -97,12 +105,12 @@ const LoginScreen = () => {
                 </View>
               </View>
               <Pressable onPress={onLogin} style={styles.submitButton}>
-                <Text style={styles.submitButtonText}>Увійти</Text>
+                <Text style={styles.submitButtonText}> Увійти</Text>
               </Pressable>
               <View style={styles.enterButton}>
                 <Text style={styles.enterButtonText}>Немає акаунту?</Text>
                 <Pressable>
-                  <Text style={styles.regLink}>Зареєструватися</Text>
+                  <Text style={styles.regLink} onPress={() => navigation.navigate("Registration")}> Зареєструватися</Text>
                 </Pressable>
               </View>
             </View>
@@ -110,8 +118,6 @@ const LoginScreen = () => {
         </ImageBackground>
       </View>
     </TouchableWithoutFeedback>
-    </SafeAreaView>
-    </SafeAreaProvider>
   );
 };
 

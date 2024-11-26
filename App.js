@@ -1,35 +1,54 @@
 import "react-native-gesture-handler";
-import { StyleSheet } from "react-native";
+import { StyleSheet, Pressable } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import RegistrationScreen from "./screens/RegistrationScreen";
 import LoginScreen from "./screens/LoginScreen";
-import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import PostsScreen from "./screens/PostsScreen";
+import LogOutComponent from "./assets/icons/LogOutIconComponent";
+import TabNavigator from "./Components/TabNavigator";
 
 const MainStack = createStackNavigator();
 
 export default function App() {
   return (
-    // <SafeAreaProvider>
-    //   <SafeAreaView style={styles.container}>
         <NavigationContainer>
-          <MainStack.Navigator>
-            <MainStack.Screen name="Login" component={LoginScreen} />
+          <MainStack.Navigator initialRouteName="Home">
+            <MainStack.Screen
+              name="Login"
+              component={LoginScreen}
+              options={{ headerShown: false }}  />
             <MainStack.Screen
               name="Registration"
               component={RegistrationScreen}
+              options={{ headerShown: false }} 
             />
-            {/* <MainStack.Screen name="Home" component={Home} /> */}
+            <MainStack.Screen name="Home" component={PostsScreen} 
+            options={{
+              title: "Публікації",
+              headerStyle: {
+              },
+              headerTintColor: "#212121",
+              headerTitleStyle: {
+                fontSize: 17,
+                fontWeight: 500,
+                lineHeight: 22,
+                letterSpacing: -0.408
+              },
+              headerRight: () => (
+                <Pressable style={{paddingHorizontal: 8}}>
+                  <LogOutComponent/>
+                </Pressable>
+              ),
+            }}/>
           </MainStack.Navigator>
         </NavigationContainer>
-    //   </SafeAreaView>
-    // </SafeAreaProvider>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1, // Растягивает SafeAreaView на всё пространство
+    flex: 1,
     backgroundColor: "#fff",
   },
 });

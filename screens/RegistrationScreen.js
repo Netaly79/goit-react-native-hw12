@@ -13,15 +13,23 @@ import {
   View,
   TextInput,
 } from "react-native";
+import { useNavigation } from '@react-navigation/native';
 
-import AddPhotoComponent from "../assets/icons/AddPhotoComponent";
+import AddPhotoComponent from "../assets/icons/AddPhotoIconComponent";
 const image = require("../assets/photo_bg.png");
 const photo_block = null;
 
 const RegistrationScreen = () => {
-  const [login, setLogin] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [inputs, setInputs] = useState({
+    email: "", password: "", login: ""
+    });
+
+  const navigation = useNavigation();
+  
+  const handleInputChange = (name, value) => {
+    setInputs((prev) => ({ ...prev, [name]: value }));
+    };
+
   const [isEmailFocused, setIsEmailFocused] = useState(false);
   const [isPassFocused, setIsPassFocused] = useState(false);
   const [isLoginFocused, setIsLoginFocused] = useState(false);
@@ -31,12 +39,12 @@ const RegistrationScreen = () => {
   };
 
   const onRegistration = () => {
-    if (!email || !password || !login) {
+    if (!inputs.email || !inputs.password || !inputs.login) {
       Alert.alert("Помилка", "Будь ласка, заповніть усі необхідні поля");
       return;
     }
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-    if (!emailRegex.test(email)) {
+    if (!emailRegex.test(inputs.email)) {
       Alert.alert(
         "Помилка",
         "Будь ласка, введіть коректну адресу електронної пошти"
@@ -44,11 +52,11 @@ const RegistrationScreen = () => {
       return;
     }
 
-    if (password.length < 6) {
+    if (inputs.password.length < 6) {
       Alert.alert("Помилка", "Пароль повинен бути не менше 6 символів");
       return;
     }
-    Alert.alert("Регистрація", `${login} + ${email} + ${password}`);
+    Alert.alert("Регистрація", `${inputs.login} + ${inputs.email} + ${inputs.password}`);
   };
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -68,8 +76,8 @@ const RegistrationScreen = () => {
                 <TextInput
                   style={[styles.input, isLoginFocused && styles.inputFocused]}
                   placeholder="Логін"
-                  value={login}
-                  onChangeText={setLogin}
+                  value={inputs.login}
+                  onChangeText={(value) => handleInputChange("login", value)}
                   placeholderTextColor="#BDBDBD"
                   keyboardType="default"
                   autoCapitalize="none"
@@ -78,8 +86,8 @@ const RegistrationScreen = () => {
                 />
                 <TextInput
                   style={[styles.input, isEmailFocused && styles.inputFocused]}
-                  value={email}
-                  onChangeText={setEmail}
+                  value={inputs.email}
+                  onChangeText={(value) => handleInputChange("email", value)}
                   placeholder="Адреса електронної пошти"
                   placeholderTextColor="#BDBDBD"
                   keyboardType="email-address"
@@ -94,8 +102,8 @@ const RegistrationScreen = () => {
                   ]}>
                   <TextInput
                     style={styles.password}
-                    value={password}
-                    onChangeText={setPassword}
+                    value={inputs.password}
+                    onChangeText={(value) => handleInputChange("password", value)}
                     placeholder="Пароль"
                     placeholderTextColor="#BDBDBD"
                     autoCapitalize="none"
@@ -118,7 +126,7 @@ const RegistrationScreen = () => {
               <View style={styles.enterButton}>
                 <Text style={styles.enterButtonText}>Вже є акаунт?</Text>
                 <Pressable>
-                  <Text style={styles.regLink}>Увійти</Text>
+                  <Text style={styles.regLink} onPress={() => navigation.navigate("Login")}> Увійти</Text>
                 </Pressable>
               </View>
             </View>
