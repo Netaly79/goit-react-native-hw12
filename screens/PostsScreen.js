@@ -3,9 +3,6 @@ import { Image, StyleSheet, Text, View, FlatList } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { travelCards } from "../mockData.js";
 import PostCard from "../Components/PostCard.js";
-import TabNavigator from "../Components/TabNavigator.js";
-
-
 
 const PostsScreen = () => {
   const navigation = useNavigation();
@@ -28,9 +25,9 @@ const PostsScreen = () => {
         renderItem={({ item }) => <PostCard item={item} />}
       />
 
-      <View style={styles.navigator}>
+      {/* <View style={styles.navigator}>
         <TabNavigator initialTab="Add"/>
-      </View>
+      </View> */}
     </View>
   );
 };

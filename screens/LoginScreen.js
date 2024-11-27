@@ -16,7 +16,7 @@ import { useNavigation } from '@react-navigation/native';
 
 const image = require("../assets/photo_bg.png");
 
-const LoginScreen = () => {
+const LoginScreen = ({ navigation, setLogged }) => {
   const [inputs, setInputs] = useState({
     email: "", password: "",
     });
@@ -24,7 +24,6 @@ const LoginScreen = () => {
   const handleInputChange = (name, value) => {
     setInputs((prev) => ({ ...prev, [name]: value }));
     };
-  const navigation = useNavigation();
 
   const [isEmailFocused, setIsEmailFocused] = useState(false);
   const [isPassFocused, setIsPassFocused] = useState(false);
@@ -50,7 +49,7 @@ const LoginScreen = () => {
     }
 
     Alert.alert("Логін інфо", `${inputs.email} + ${inputs.password}`);
-    navigation.navigate("Home");
+    setLogged(true);
   };
 
   const togglePasswordVisibility = () => {

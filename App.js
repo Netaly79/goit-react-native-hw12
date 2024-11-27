@@ -1,4 +1,5 @@
 import "react-native-gesture-handler";
+import React, { useState } from "react";
 import { StyleSheet, Pressable } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -11,38 +12,26 @@ import TabNavigator from "./Components/TabNavigator";
 const MainStack = createStackNavigator();
 
 export default function App() {
+  const [isUserLogged, setLogged] = useState(true);
   return (
-        <NavigationContainer>
-          <MainStack.Navigator initialRouteName="Home">
-            <MainStack.Screen
-              name="Login"
-              component={LoginScreen}
-              options={{ headerShown: false }}  />
-            <MainStack.Screen
-              name="Registration"
-              component={RegistrationScreen}
-              options={{ headerShown: false }} 
-            />
-            <MainStack.Screen name="Home" component={PostsScreen} 
-            options={{
-              title: "Публікації",
-              headerStyle: {
-              },
-              headerTintColor: "#212121",
-              headerTitleStyle: {
-                fontSize: 17,
-                fontWeight: 500,
-                lineHeight: 22,
-                letterSpacing: -0.408
-              },
-              headerRight: () => (
-                <Pressable style={{paddingHorizontal: 8}}>
-                  <LogOutComponent/>
-                </Pressable>
-              ),
-            }}/>
-          </MainStack.Navigator>
-        </NavigationContainer>
+    <NavigationContainer>
+      {isUserLogged ? (
+        <TabNavigator />
+      ) : (
+        <MainStack.Navigator initialRouteName="Login">
+          <MainStack.Screen
+            name="Login"
+            options={{ headerShown: false }}>
+            {(props) => <LoginScreen {...props} setLogged={setLogged} />}
+          </MainStack.Screen>
+          <MainStack.Screen
+            name="Registration"
+            component={RegistrationScreen}
+            options={{ headerShown: false }}
+          />
+        </MainStack.Navigator>
+      )}
+    </NavigationContainer>
   );
 }
 
