@@ -1,13 +1,14 @@
 import React from "react";
 import { View, TouchableOpacity } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import ProfileScreen from "../screens/ProfileScreen";
-import PostsScreen from "../screens/PostsScreen";
-import CreatePostsScreen from "../screens/CreatePostsScreen";
-import ProfileIconComponent from "../assets/icons/ProfileIconComponent";
-import AddPostIconComponent from "../assets/icons/AddPostIconComponent";
-import GridIconComponent from "../assets/icons/GridIconComponent";
-import LogOutComponent from "../assets/icons/LogOutIconComponent";
+import ProfileScreen from "../../screens/ProfileScreen";
+import PostsScreen from "../../screens/PostsScreen";
+import CreatePostsScreen from "../../screens/CreatePostsScreen";
+import ProfileIconComponent from "../../assets/icons/ProfileIconComponent";
+import AddPostIconComponent from "../../assets/icons/AddPostIconComponent";
+import GridIconComponent from "../../assets/icons/GridIconComponent";
+import LogOutComponent from "../../assets/icons/LogOutIconComponent";
+import PostNavigator from "./PostNavigator";
 
 const Tab = createBottomTabNavigator();
 
@@ -68,7 +69,7 @@ const TabNavigator = () => (
       ),
       tabBarShowLabel: false,
     })}>
-    <Tab.Screen name="Posts" component={PostsScreen} options={{
+    <Tab.Screen name="Posts" component={PostNavigator} options={{
       title: "Публікації",
       headerRight: () => (
         <View style={{ marginRight: 16 }}>
