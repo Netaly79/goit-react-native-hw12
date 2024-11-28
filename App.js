@@ -6,16 +6,14 @@ import { NavigationContainer } from "@react-navigation/native";
 import TabNavigator from "./Components/navigation/TabNavigator";
 import MainStackNavigator from "./Components/navigation/MainStackNavigator";
 
-
-
 export default function App() {
   const [isUserLogged, setLogged] = useState(true);
   return (
     <NavigationContainer>
       {isUserLogged ? (
-        <TabNavigator />
+        <TabNavigator setLogged={setLogged} />
       ) : (
-        <MainStackNavigator setLogged={setLogged}/>
+        <MainStackNavigator setLogged={setLogged} />
       )}
     </NavigationContainer>
   );

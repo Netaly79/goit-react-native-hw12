@@ -1,38 +1,47 @@
 import React from "react";
-import { Image, StyleSheet, Text, View, FlatList } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import {
+  Image,
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+  Platform,
+  SafeAreaView,
+} from "react-native";
 import { travelCards } from "../mockData.js";
 import PostCard from "../Components/PostCard.js";
 
 const PostsScreen = () => {
-  const navigation = useNavigation();
   const photo_block = require("../assets/avatar.jpeg");
   const posts = travelCards;
 
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <Image style={styles.avatar} source={photo_block} />
-        <View style={styles.user}>
-          <Text style={styles.userName}>Natali Romanova</Text>
-          <Text style={styles.userEmail}>email@example.com</Text>
+    <SafeAreaView style={styles.safeArea}>
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <Image style={styles.avatar} source={photo_block} />
+          <View style={styles.user}>
+            <Text style={styles.userName}>Natali Romanova</Text>
+            <Text style={styles.userEmail}>email@example.com</Text>
+          </View>
         </View>
+        <FlatList
+          style={styles.list}
+          data={posts}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => <PostCard item={item} />}
+        />
       </View>
-      <FlatList
-        style={styles.list}
-        data={posts}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <PostCard item={item} />}
-      />
-
-      {/* <View style={styles.navigator}>
-        <TabNavigator initialTab="Add"/>
-      </View> */}
-    </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: "white",
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+  },
   container: {
     flex: 1,
     marginHorizontal: 16

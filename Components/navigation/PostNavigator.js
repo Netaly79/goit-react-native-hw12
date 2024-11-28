@@ -2,11 +2,13 @@ import { createStackNavigator } from "@react-navigation/stack";
 import PostsScreen from "../../screens/PostsScreen";
 import MapScreen from "../../screens/MapScreen";
 import CommentsScreen from "../../screens/CommentsScreen";
-const Posts = createStackNavigator();
-const PostNavigator = () => {
+import BackButtonComponent from "../BackButtonComponent";
 
+const Posts = createStackNavigator();
+
+const PostNavigator = () => {
   const forwardBackButton = (navigation) => (
-    <BackButton onPress={() => navigation.goBack()} />
+    <BackButtonComponent onPress={() => navigation.goBack()} />
   );
 
   return (
@@ -15,8 +17,7 @@ const PostNavigator = () => {
       screenOptions={{
         headerRightContainerStyle: { paddingRight: 16 },
         headerLeftContainerStyle: { paddingLeft: 16 },
-      }}
-    >
+      }}>
       <Posts.Screen
         name="AllPosts"
         component={PostsScreen}

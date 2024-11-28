@@ -12,18 +12,18 @@ import {
   Platform,
   Alert,
 } from "react-native";
-import { useNavigation } from '@react-navigation/native';
 
 const image = require("../assets/photo_bg.png");
 
 const LoginScreen = ({ navigation, setLogged }) => {
   const [inputs, setInputs] = useState({
-    email: "", password: "",
-    });
-  
+    email: "",
+    password: "",
+  });
+
   const handleInputChange = (name, value) => {
     setInputs((prev) => ({ ...prev, [name]: value }));
-    };
+  };
 
   const [isEmailFocused, setIsEmailFocused] = useState(false);
   const [isPassFocused, setIsPassFocused] = useState(false);
@@ -86,7 +86,9 @@ const LoginScreen = ({ navigation, setLogged }) => {
                   <TextInput
                     style={styles.password}
                     value={inputs.password}
-                    onChangeText={(value) => handleInputChange("password", value)}
+                    onChangeText={(value) =>
+                      handleInputChange("password", value)
+                    }
                     placeholder="Пароль"
                     placeholderTextColor="#BDBDBD"
                     autoCapitalize="none"
@@ -109,7 +111,12 @@ const LoginScreen = ({ navigation, setLogged }) => {
               <View style={styles.enterButton}>
                 <Text style={styles.enterButtonText}>Немає акаунту?</Text>
                 <Pressable>
-                  <Text style={styles.regLink} onPress={() => navigation.navigate("Registration")}> Зареєструватися</Text>
+                  <Text
+                    style={styles.regLink}
+                    onPress={() => navigation.navigate("Registration")}>
+                    {" "}
+                    Зареєструватися
+                  </Text>
                 </Pressable>
               </View>
             </View>

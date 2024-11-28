@@ -1,12 +1,11 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import React, { useState } from "react";
+import React from "react";
 import RegistrationScreen from "../../screens/RegistrationScreen";
 import LoginScreen from "../../screens/LoginScreen";
 
-
 const MainStack = createStackNavigator();
 
-const MainStackNavigator = ({setLogged}) => (
+const MainStackNavigator = ({ setLogged }) => (
   <MainStack.Navigator initialRouteName="Login">
     <MainStack.Screen name="Login" options={{ headerShown: false }}>
       {(props) => <LoginScreen {...props} setLogged={setLogged} />}
